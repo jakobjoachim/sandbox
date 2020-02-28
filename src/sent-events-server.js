@@ -72,4 +72,7 @@ let clients = [];
 let nests = [];
 
 // Start server on 3000 port
-app.listen(PORT, () => console.log(`Swamp Events service listening on port ${PORT}`));
+app.listen({
+  host: '0.0.0.0',
+  port: PORT
+}, () => console.log(`Swamp Events service listening on port ${PORT}`));
