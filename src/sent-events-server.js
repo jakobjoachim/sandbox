@@ -6,7 +6,7 @@ const cors = require('cors');
 const app = express();
 
 // Middleware for GET /events endpoint
-function eventsHandler(req, res, next) {
+function eventsHandler(req, res) {
   // Mandatory headers and http status to keep connection open
   const headers = {
     'Content-Type': 'text/event-stream',
@@ -23,6 +23,7 @@ function eventsHandler(req, res, next) {
   // object of client connection on clients list
   // Later we'll iterate it and send updates to each client
   const clientId = Date.now();
+  console.log('new client: ' + clientId);
   const newClient = {
     id: clientId,
     res
@@ -43,7 +44,8 @@ function sendEventsToAll(newNest) {
 }
 
 // Middleware for POST /nest endpoint
-async function addNest(req, res, next) {
+async function addNest(req, res) {
+  console.log(req.body);
   const newNest = req.body;
   nests.push(newNest);
 
@@ -64,7 +66,7 @@ app.post('/nest', addNest);
 app.get('/events', eventsHandler);
 app.get('/status', (req, res) => res.json({ clients: clients.length }));
 
-const PORT = 3000;
+const PORT = 80;
 
 let clients = [];
 let nests = [];
